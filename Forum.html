@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" href="#">
+</head>
+
+<body>
+    <!-- Main -->
+    <form class="box" action="#">
+        <h1>Forum</h1>
+        <div id="comments"></div>
+        <div id="box1">
+            <input type="text" class="input" id="detail" placeholder="What are you thoughts?" required>
+            <input type="text" class="inputSmall" id="author" placeholder="Name" required>
+            <button type="submit" class="buttonBlueSmall" onclick="addComment()">Comments</button>
+        </div>
+
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Customer</h4>
+                </div>
+                <div class="modal-body" id="body" style="display: flex; justify-content: center;">
+                    <div>
+                        <input type="text" class="input" id="editDetail" placeholder="What are you thoughts?" required> 
+                        <input type="text" class="inputMedium" id="editAuthor" placeholder="Name" required>
+                        <input type="text" class="inputSmall" id="editLove" placeholder="Love" required>
+                        <button type="submit" id="edit" class="buttonBlueSmall">Edit Comment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        let url = 'http://localhost:8080';
+
+        async function addComment() {
+            let detail = document.getElementById("detail");
+            let author = document.getElementById("author");
+            if (detail.value.length != 0 & author.value.length != 0) {
+                let comment = new Object();
+                comment.forumDetail = document.getElementById("detail").value;
+                comment.forumAuthor = document.getElementById("author").value;
+
+                let request = await fetch(`${url}/forum`, {
+                    method: 'POST',
+                    headers: { "Content-type": "application/json;charset=UTF-8" },
+                    body: JSON.stringify(comment)
+                });
+                loadComments();
+            }
+        }
+
+        async function loadComments() {
+            let request = await fetch(`${url}/forums`);
+            let rawData = await request.text();
+            let data = JSON.parse(rawData);
+
+            let box = document.getElementById("comments");
+            box.innerHTML = "";
+            let listGroup = document.createElement("ul");
+            listGroup.className = "list-group";
+
+            if (data.length == 0) {
+                let h3 = document.createElement("h3");
+                h3.innerHTML = "There're no comments in this forum.";
+                h3.style.textAlign = "center";
+                h3.style.color = "white";
+                box.appendChild(h3);
+            }
+            data.forEach(temp => {
+                let listItem = document.createElement("li");
+                listItem.className = "list-group-item";
+                listItem.innerHTML =
+                    `<div id = "inline">
+                        <div class = "one">
+                            ${temp.forumDetail}
+                            </br>
+                            Post by ${temp.forumAuthor} · ${temp.forumPostDate}
+                        </div>  <div class = "two">
+                            <a class="lovebtn" style="text-decoration: none;" data-count="${temp.forumLove}" onclick="addLove(${temp.forumId})">❤</a> 
+                            <button class="buttonGreenSmall" onclick="editComment(${temp.forumId})">Edit</button>  
+                            <button class="buttonRedSmall" onclick="deleteComment(${temp.forumId})">Delete</button> 
+                        </div>  
+                    </div>`;
+                listGroup.appendChild(listItem);
+            });
+
+            box.appendChild(listGroup);
+        }
+
+        async function deleteComment(forumId) {
+            let confirmDelete = confirm("Delete comment?");
+            if (confirmDelete == true) {
+                let response = await fetch(`${url}/forum/${forumId}`, {
+                    method: 'DELETE'
+                });
+                document.getElementById("comments").innerHTML = "";
+                location.reload();
+            }
+        }
+
+        async function editComment(forumId) {
+            $('#myModal').modal('show');
+
+            let request = await fetch(`${url}/forum/${forumId}`);
+            let rawData = await request.text();
+            let data = JSON.parse(rawData);
+            document.getElementById("editDetail").value = data.forumDetail;
+            document.getElementById("editAuthor").value = data.forumAuthor;
+            document.getElementById("editLove").value = data.forumLove;
+
+            document.getElementById("edit").addEventListener("click", async () => {
+                let detail = document.getElementById("editDetail");
+                let author = document.getElementById("editAuthor");
+                let love = document.getElementById("editLove");
+                if (detail.value.length != 0 & author.value.length != 0 & love.value.length != 0) {
+                    let comment = new Object();
+
+                    comment.forumId = forumId;
+                    comment.forumDetail = document.getElementById("editDetail").value;
+                    comment.forumAuthor = document.getElementById("editAuthor").value;
+                    comment.forumLove = document.getElementById("editLove").value;
+
+                    console.log(comment);
+                    let request = await fetch(`${url}/forum`, {
+                        method: 'PUT',
+                        headers: { "Content-type": "application/json;charset=UTF-8" },
+                        body: JSON.stringify(comment)
+                    });
+                    $('#myModal').modal('hide');
+                    location.reload();
+                }
+            });
+        }
+
+        async function addLove(forumId) {
+            let request = await fetch(`${url}/love/${forumId}`, { method: 'PUT' });
+            loadComments();
+        }
+
+        loadComments();
+    </script>
+</body>
+
+</html>

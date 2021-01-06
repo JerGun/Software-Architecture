@@ -8,14 +8,15 @@ body {
 }
 
 .box {
-    width: 300px;
-    padding: 40px;
+    width: 1000px;
+    padding: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: #191919;
     text-align: center;
+    border-radius: px;
 }
 
 .box h1 {
@@ -24,81 +25,87 @@ body {
     font-weight: 500;
 }
 
-.box input[type="text"] {
+.input[type="text"] {
     border: 0;
     background: none;
-    display: block;
-    margin: 20px auto;
+    display: inline-block;
+    text-align: center;
+    border: 2px solid #8b8b8b;
+    padding: 10px 10px;
+    width: 220px;
+    outline: none;
+    color: black;
+    border-radius: 10px;
+    transition: 0.25s;
+}
+
+.input[type="text"]:focus {
+    width: 300px;
+    border-color: #3498db;
+}
+
+.inputMedium[type="text"] {
+    border: 0;
+    background: none;
+    display: inline-block;
+    text-align: center;
+    border: 2px solid #8b8b8b;
+    padding: 10px 10px;
+    width: 100px;
+    outline: none;
+    color: black;
+    border-radius: 10px;
+    transition: 0.25s;
+    margin-left: 10px;
+}
+
+.inputMedium[type="text"]:focus {
+    width: 160px;
+    border-color: #3498db;
+}
+
+.inputSmall[type="text"] {
+    border: 0;
+    background: none;
+    display: inline-block;
+    text-align: center;
+    border: 2px solid #8b8b8b;
+    padding: 10px 10px;
+    width: 80px;
+    outline: none;
+    color: black;
+    border-radius: 10px;
+    transition: 0.25s;
+    margin-left: 10px;
+}
+
+.inputSmall[type="text"]:focus {
+    width: 120px;
+    border-color: #3498db;
+}
+
+#box1 {
+    background: white;
+    border-radius: 5px;
+}
+
+.buttonBlueSmall {
+    border: 0;
+    background: none;
+    margin: 5px auto;
     text-align: center;
     border: 2px solid #3498db;
-    padding: 14px 10px;
-    width: 200px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-}
-
-.box input[type="text"]:focus {
-    width: 280px;
-    border-color: #2ecc71;
-}
-
-.box button {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer;
-}
-
-.box button:hover {
-    background: #2ecc71;
-}
-
-.buttonGreen {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
+    padding: 10px 26px;
     outline: none;
     color: black;
-    border-radius: 24px;
+    border-radius: 10px;
     transition: 0.25s;
     cursor: pointer;
+    margin-left: 10px;
 }
 
-.buttonGreen:hover {
-    background: #2ecc71;
-}
-
-.buttonRed {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #cc2e2e;
-    padding: 14px 40px;
-    outline: none;
-    color: black;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer;
-}
-
-.buttonRed:hover {
-    background: #cc2e2e;
+.buttonBlueSmall:hover {
+    background: #3498db;
 }
 
 .buttonGreenSmall {
@@ -110,9 +117,10 @@ body {
     padding: 10px 26px;
     outline: none;
     color: black;
-    border-radius: 24px;
+    border-radius: 10px;
     transition: 0.25s;
     cursor: pointer;
+    margin-left: 50px;
 }
 
 .buttonGreenSmall:hover {
@@ -128,10 +136,10 @@ body {
     padding: 10px 26px;
     outline: none;
     color: black;
-    border-radius: 24px;
+    border-radius: 10px;
     transition: 0.25s;
     cursor: pointer;
-    margin-left: 25px;
+    margin-left: 10px;
 }
 
 .buttonRedSmall:hover {
@@ -145,14 +153,15 @@ body {
 }
 
 .one {
-    width: 50%;
+    width: 40%;
     display: flex;
+    text-align: left;
     align-items: center;
     justify-content: left;
 }
 
 .two {
-    width: 50%;
+    width: 60%;
     text-align: right;
 }
 
@@ -199,80 +208,6 @@ body {
     color: #191919;
 }
 
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    appearance: none;
-    outline: 0;
-    box-shadow: none;
-    border: 0 !important;
-    background: #191919;
-    background-image: none;
-}
-
-
-/* Remove IE arrow */
-
-select::-ms-expand {
-    display: none;
-}
-
-
-/* Custom Select */
-
-.select {
-    color: white;
-    position: relative;
-    display: flex;
-    width: 20em;
-    height: 3em;
-    line-height: 3;
-    background: #191919;
-    overflow: hidden;
-    border-radius: .25em;
-}
-
-select {
-    flex: 1;
-    padding: 0 .5em;
-    color: #fff;
-    cursor: pointer;
-}
-
-
-/* Arrow */
-
-.select::after {
-    content: '\25BC';
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0 1em;
-    background: #191919;
-    cursor: pointer;
-    pointer-events: none;
-    -webkit-transition: .25s all ease;
-    -o-transition: .25s all ease;
-    transition: .25s all ease;
-}
-
-
-/* Transition */
-
-.select:hover::after {
-    color: #f39c12;
-}
-
-.alert {
-    padding: 20px;
-    background-color: #4CAF50;
-    color: white;
-    opacity: 1;
-    transition: opacity 0.6s;
-    margin-bottom: 15px;
-}
-
 .closeButton {
     margin-left: 15px;
     color: white;
@@ -286,4 +221,98 @@ select {
 
 .closeButton:hover {
     color: #191919;
+}
+
+.lovebtn,
+.lovebtn:after {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid;
+    display: inline-block;
+    height: 26px;
+    padding: 0 10px;
+    justify-content: center;
+}
+
+.lovebtn {
+    -webkit-box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5) inset;
+    -moz-box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5) inset;
+    box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5) inset;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    margin-right: 38px;
+    position: relative;
+    font-size: 16px;
+}
+
+.lovebtn:first-letter {
+    font-size: 12px;
+}
+
+.lovebtn:hover:after {
+    text-shadow: none;
+}
+
+.lovebtn:after {
+    background-color: #eee;
+    border-color: #d3d3d3;
+    color: #777;
+    content: attr(data-count);
+    left: 100%;
+    margin-left: 14px;
+    margin-right: -13px;
+    position: absolute;
+    top: -1px;
+}
+
+.lovebtn:before {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    filter: progid: DXImageTransform.Microsoft.Matrix(M11=0.7071067811865476, M12=-0.7071067811865475, M21=0.7071067811865475, M22=0.7071067811865476, sizingMethod='auto expand');
+    background-color: #eee;
+    border: 1px solid #d3d3d3;
+    border-right: 0;
+    border-top: 0;
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: 7px;
+    height: 10px;
+    width: 10px;
+    z-index: 1;
+    zoom: 1;
+}
+
+
+/*
+   * Custom styles
+   */
+
+.lovebtn,
+.lovebtn:visited {
+    background-color: #dbdbdb;
+    border-color: #bbb;
+    color: #666;
+}
+
+.lovebtn:first-letter,
+.lovebtn:visited:first-letter {
+    color: #f64136;
+}
+
+.lovebtn:hover,
+.lovebtn:hover:first-letter {
+    text-shadow: 0 1px 0 #b12f27;
+    background-color: #f64136;
+    border-color: #b12f27;
+    color: #eeeeee;
+}
+
+.lovebtn:active:first-letter {
+    color: #b12f27;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 }
